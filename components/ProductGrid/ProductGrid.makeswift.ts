@@ -1,10 +1,9 @@
 import dynamic from 'next/dynamic'
 
-import { Combobox, List, Shape, Slot, Style, TextInput } from '@makeswift/runtime/controls'
+import { Checkbox, Combobox, List, Shape } from '@makeswift/runtime/controls'
 import { forwardNextDynamicRef } from '@makeswift/runtime/next'
 
 import { runtime } from '@/lib/makeswift/runtime'
-import { removeEdgesAndNodes } from '@/lib/utils/removeEdgesAndNodes'
 
 runtime.registerComponent(
   forwardNextDynamicRef(patch =>
@@ -14,6 +13,10 @@ runtime.registerComponent(
     type: 'product-grid',
     label: 'BigCommerce / ProductGrid',
     props: {
+      variantOptionShown: Checkbox({
+        label: 'Show Variant Options',
+        defaultValue: true,
+      }),
       products: List({
         label: 'Products',
         type: Shape({
@@ -46,6 +49,7 @@ runtime.registerComponent(
             }),
           },
         }),
+
         getItemLabel(item) {
           return item?.children?.label ?? 'Product Name'
         },
