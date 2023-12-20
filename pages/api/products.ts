@@ -17,7 +17,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     const productList = await products.json()
-    console.log("productList", productList)
 
     res.status(200).json(productList?.data)
 }
