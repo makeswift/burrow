@@ -25,6 +25,11 @@ module.exports = {
         collapse: 'collapse 400ms cubic-bezier(1, 0, 0.25, 1)',
         scrollLeft: 'scrollLeft var(--marquee-duration) linear infinite',
       },
+      colors: {
+        beige: {
+          100: '#e5d7cc',
+        }
+      }
     },
   },
   plugins: [],
