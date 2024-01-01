@@ -1,4 +1,6 @@
 import React, { Ref, forwardRef } from 'react'
+import { FontAwesomeIcon, faFacebook, faTwitter, faInstagram } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 import clsx from 'clsx'
 
@@ -25,17 +27,17 @@ export const DimensionsBlock = forwardRef<HTMLDivElement, Props>((
   const contentForSocialLinks = {
     facebook: {
       href: 'https://www.facebook.com/burrow',
-      icon: 'icon icon-facebook',
+      icon: faFacebook,
       profile: 'Facebook profile',
     },
     twitter: {
       href: 'https://www.twitter.com/hiburrow',
-      icon: 'icon icon-twitter',
+      icon: faTwitter
       profile: 'Twitter profile',
     },
     instagram: {
       href: 'https://www.instagram.com/burrow',
-      icon: 'icon icon-instagram',
+      icon: faInstagram,
       profile: 'Instagram profile',
     }
   }
@@ -49,7 +51,7 @@ export const DimensionsBlock = forwardRef<HTMLDivElement, Props>((
           {subscribeElement.socialLinks.map((item, idx) => (
             <li className='social-list-item'>
               <a href={contentForSocialLinks[item.linkType].href} aria-label={contentForSocialLinks[item.linkType].profile} target="_self" hreflang="en-us">
-                <i className={contentForSocialLinks[item.linkType].icon}></i>
+                <FontAwesomeIcon icon={contentForSocialLinks[item.linkType].icon} />
               </a>
             </li>
           ))}
