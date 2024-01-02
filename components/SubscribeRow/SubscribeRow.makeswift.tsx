@@ -17,9 +17,11 @@ runtime.registerComponent(
         type: {
           className: Style(),
           label: TextInput({ label: 'Subscription Label', defaultValue: 'Sign up for enthralling couch reads' }),
-          buttonText: TextInput({ label: 'Button Text', defaultValue: 'Subscribe Now' }),
+          backgroundColor: Color({ label: 'Background Color', defaultValue: '#514f4d' }),
+          borderColor: Color({ label: 'Border Color', defaultValue: '#f7eee3' }),
+          buttonText: TextInput({ label: 'Button Text', defaultValue: 'SUBSCRIBE' }),
+          buttonTextColor: Color({ label: 'Button Text Color', defaultValue: '#514f4d' }),
           buttonColor: Color({ label: 'Button Color', defaultValue: '#f7eee3' }),
-          borderColor: Color({ label: 'Button Border Color', defaultValue: '#f7eee3' }),
           socialLinks: List({
             label: 'Social Links',
             type: Select({
