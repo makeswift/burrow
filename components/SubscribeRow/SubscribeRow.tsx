@@ -1,6 +1,6 @@
 import React, { Ref, forwardRef } from 'react'
-import { FontAwesomeIcon, faFacebook, faTwitter, faInstagram } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebookF, faInstagram, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 
 import clsx from 'clsx'
 
@@ -20,22 +20,23 @@ type Props = {
   subscribeElement: SubscribeElement
 }
 
-export const DimensionsBlock = forwardRef<HTMLDivElement, Props>((
+
+export const SubscribeRow = forwardRef(function SubscribeRow(
   { subscribeElement }: Props,
   ref
-) => {
+) {
   const contentForSocialLinks = {
-    facebook: {
+    'facebook': {
       href: 'https://www.facebook.com/burrow',
-      icon: faFacebook,
+      icon: faFacebookF,
       profile: 'Facebook profile',
     },
-    twitter: {
+    'twitter': {
       href: 'https://www.twitter.com/hiburrow',
-      icon: faTwitter
+      icon: faXTwitter,
       profile: 'Twitter profile',
     },
-    instagram: {
+    'instagram': {
       href: 'https://www.instagram.com/burrow',
       icon: faInstagram,
       profile: 'Instagram profile',
@@ -44,17 +45,30 @@ export const DimensionsBlock = forwardRef<HTMLDivElement, Props>((
   return (
     <div ref={ref} className="flex flex-row">
       <div className="flex-1 subscribe-container">
-
+        <form>
+          <div>
+            <input id="email" className="has-label" type="email" name="email" required="" autocomplete="email" style={{ paddingTop: '1rem', padding: '0 1.25rem', width: '100%', height: '3.125rem' }} autocapitalize="none" aria-label="email" value="" />
+            <label for="email" style={{ position: 'absolute', top: '0', zIndex: '4', lineHeight: '1rem' }}>{subscribeElement.label}</label>
+          </div>
+        </form>
       </div>
       <div className="flex-1 social-container">
-        <ul className='social-list'>
-          {subscribeElement.socialLinks.map((item, idx) => (
-            <li className='social-list-item'>
-              <a href={contentForSocialLinks[item.linkType].href} aria-label={contentForSocialLinks[item.linkType].profile} target="_self" hreflang="en-us">
-                <FontAwesomeIcon icon={contentForSocialLinks[item.linkType].icon} />
-              </a>
-            </li>
-          ))}
+        <ul className='flex flex-row social-list'>
+          {subscribeElement.socialLinks.map((linkType, idx) => {
+            if (contentForSocialLinks[linkType] !== undefined) {
+              return (
+                <li className='social-list-linkType flex-1'>
+                  <a href={contentForSocialLinks[linkType].href} aria-label={contentForSocialLinks[linkType].profile} target="_self" hreflang="en-us">
+                    <FontAwesomeIcon icon={contentForSocialLinks[linkType].icon} />
+                  </a>
+                </li>
+              )
+            } else {
+              return (
+                <div className="p-6 text-center text-lg">There are no social links. Try adding some.</div>
+              )
+            }
+          })}
         </ul>
       </div>
     </div>
