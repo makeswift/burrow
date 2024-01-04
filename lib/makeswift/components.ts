@@ -4,4 +4,4 @@ import '@/components/Tabs/Tabs.makeswift'
 import '@/components/ProductGrid/ProductGrid.makeswift'
 import '@/components/DimensionsBlock/DimensionsBlock.makeswift'
 import '@/components/SectionsBlock/SectionsBlock.makeswift'
-
+import '@/components/SubscribeRow/SubscribeRow.makeswift'
