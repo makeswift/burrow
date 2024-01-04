@@ -28,6 +28,9 @@ module.exports = {
       colors: {
         beige: {
           100: '#e5d7cc',
+        },
+        canary: {
+          100: '#fcee71'
         }
       }
     },

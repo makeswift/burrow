@@ -19,7 +19,7 @@ type Props = {
 
 export const DimensionsBlock = forwardRef<HTMLDivElement, Props>((
   { description }: Props,
-  ref
+  ref: Ref<HTMLDivElement>
 ) => {
   return (
     <div ref={ref} className="container">
