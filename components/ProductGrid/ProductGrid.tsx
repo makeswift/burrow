@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ReactNode, Ref, forwardRef, useState } from 'react'
+import { Ref, forwardRef, useState } from 'react'
+
+import { removeEdgesAndNodes } from '@/lib/utils/removeEdgesAndNodes'
 
 type Props = {
   className?: string
@@ -13,16 +15,67 @@ export const ProductGrid = forwardRef(function ProductGrid(
   ref: Ref<HTMLDivElement>
 ) {
   //TODO Add default product card.  Add option flags, Add count
-  console.log('products component', variantOptionShown)
   const [selectedVariant, setSelectedVariant] = useState('')
-  const setVariant = async (variant: ReactNode) => {
-    try {
-      console.log('variant', variant)
-      // setSelectedVariant(variant?.hex)
-    } catch (err) {
-      console.log('we here', err)
+  const [selectedVariantImage, setSelectedVariantImage] = useState('')
 
+  const setVariant = async (
+    product: any,
+    variant: {
+      entityId: string
+      label: string
+      hexColors: string
+    }
+  ) => {
+    try {
+      product?.children?.optionValues[0].map(optionValue => {
+        optionValue.isDefault = false
+      })
+      variant.isDefault = true
+      product?.children?.variants.map(optionVariants => {
+        const variantColor = removeEdgesAndNodes(optionVariants?.options)
+        const variantKeys = removeEdgesAndNodes(variantColor[0].values)
+        if (variantKeys[0].entityId == variant?.entityId) {
+          setSelectedVariantImage(optionVariants?.defaultImage?.url)
+        }
+      })
+      setSelectedVariant(variant?.entityId)
+    } catch (err) {
       //TODO add logging
+    }
+  }
+
+  const ProductImage = (product: any) => {
+    if (selectedVariant) {
+    } else {
+      return product?.children?.defaultImage
+    }
+  }
+
+  const VariantIcons = (product: any) => {
+    if (product?.option?.isDefault) {
+      return (
+        <button onClick={() => setVariant(product?.product, product?.option)}>
+          <span
+            className="outline-3 block h-5 w-5  rounded-2xl p-2 outline-double outline-offset-2 group-disabled:bg-gray-200 group-disabled:opacity-30"
+            style={{
+              backgroundColor: product?.option?.hexColors,
+              backgroundImage: `url(${product?.option?.hexColors}})`,
+            }}
+          />
+        </button>
+      )
+    } else {
+      return (
+        <button onClick={() => setVariant(product?.product, product?.option)}>
+          <span
+            className="block h-5 w-5 rounded-2xl group-disabled:bg-gray-200 group-disabled:opacity-30"
+            style={{
+              backgroundColor: product?.option?.hexColors,
+              backgroundImage: `url(${product?.option?.hexColors}})`,
+            }}
+          />
+        </button>
+      )
     }
   }
   return (
@@ -36,28 +89,21 @@ export const ProductGrid = forwardRef(function ProductGrid(
                 <Image
                   width="200"
                   height="200"
-                  src={product?.children?.defaultImage}
+                  src={selectedVariantImage || ProductImage(product)}
                   alt={product?.children?.primary_image?.name}
                 />
               )}
             </Link>
             <div className="grid  grid-cols-3">
               {variantOptionShown && product?.children?.optionValues && (
-                <div className="grid  grid-cols-3">
-                  {product?.children?.optionValues[0]?.map((option: { hexColors: string }) => (
-                    <div key={product?.label}>
-                      <button>
-                        {/*onClick={():ReactNode => setVariant(option)}*/}
-                        <span
-                          className="block h-5 w-5  rounded-2xl group-disabled:bg-gray-200 group-disabled:opacity-30"
-                          style={{
-                            backgroundColor: option?.hexColors,
-                            backgroundImage: `url(${option?.hexColors}})`,
-                          }}
-                        />
-                      </button>
-                    </div>
-                  ))}
+                <div className="grid grid-cols-3  pt-3">
+                  {product?.children?.optionValues[0]?.map(
+                    (option: { label: string; hexColors: string }) => (
+                      <div key={product?.label}>
+                        <VariantIcons product={product} option={option} />
+                      </div>
+                    )
+                  )}
                 </div>
               )}
             </div>

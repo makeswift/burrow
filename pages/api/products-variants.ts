@@ -17,12 +17,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }),
   })
 
-  console.log('response', response)
   if (!response.ok) throw new Error(response.statusText)
 
   // @ts-ignore
   const result: GraphQLResponse<ProductQuery> = await response.json()
-  console.log('result', result)
 
   if (result.errors != null) {
     result.errors.forEach((error: { message: any }) => {
@@ -49,7 +47,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // @ts-ignore
         return removeEdgesAndNodes(option?.values)
       })
-
       return {
         name: product?.name,
         sku: product?.sku,
@@ -78,25 +75,31 @@ export const PRODUCTS_QUERY = /* GraphQL */ `
             defaultImage {
               urlOriginal
             }
-            prices(includeTax: false) {
-              priceRange {
-                max {
-                  value
-                }
-                min {
-                  value
-                }
-              }
-              price {
-                value
-              }
-            }
             variants(first: 100) {
               edges {
                 node {
                   sku
                   defaultImage {
                     url(width: 1000)
+                    isDefault
+                  }
+                  entityId
+                  id
+                  options {
+                    edges {
+                      node {
+                        displayName
+                        values {
+                          edges {
+                            node {
+                              label
+                              entityId
+                            }
+                          }
+                        }
+                        entityId
+                      }
+                    }
                   }
                 }
               }
@@ -119,7 +122,10 @@ export const PRODUCTS_QUERY = /* GraphQL */ `
                           isDefault
                           ... on SwatchOptionValue {
                             hexColors
+                            label
+                            entityId
                           }
+                          isSelected
                         }
                       }
                     }
