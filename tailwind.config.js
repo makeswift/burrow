@@ -27,12 +27,18 @@ module.exports = {
       },
       colors: {
         beige: {
-          100: '#e5d7cc',
+          100: '#f7eee3',
+          200: '#e5d7cc',
         },
-        canary: {
-          100: '#fcee71'
-        }
-      }
+        canary: '#fcee71',
+        gray: {
+          100: '#767472',
+          200: '#514f4d',
+          300: '#474543',
+          400: '#383633',
+        },
+        red: '#B05D54',
+      },
     },
   },
   plugins: [],
