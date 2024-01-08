@@ -9,7 +9,6 @@ export interface Edge<T> {
 }
 
 export const removeEdgesAndNodes = <T>(array: Connection<T>) => {
-  console.log('array', array)
   if (!array.edges) {
     return []
   }
