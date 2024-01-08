@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Ref, forwardRef, useState } from 'react'
 
+import { removeEdgesAndNodes } from '@/lib/utils/removeEdgesAndNodes'
+
 type Props = {
   className?: string
   products: any[]
@@ -19,28 +21,38 @@ export const ProductGrid = forwardRef(function ProductGrid(
   const setVariant = async (
     product: any,
     variant: {
+      entityId: string
       label: string
       hexColors: string
     }
   ) => {
     try {
-      setSelectedVariant(variant?.label)
+      product?.children?.optionValues[0].map(optionValue => {
+        optionValue.isDefault = false
+      })
+      variant.isDefault = true
+      product?.children?.variants.map(optionVariants => {
+        const variantColor = removeEdgesAndNodes(optionVariants?.options)
+        const variantKeys = removeEdgesAndNodes(variantColor[0].values)
+        if (variantKeys[0].entityId == variant?.entityId) {
+          setSelectedVariantImage(optionVariants?.defaultImage?.url)
+        }
+      })
+      setSelectedVariant(variant?.entityId)
     } catch (err) {
       //TODO add logging
     }
   }
 
   const ProductImage = (product: any) => {
-    // if (selectedVariant) {
-    //   console.log('pr', product)
-    // } else {
-    return product?.children?.defaultImage
-    // }
+    if (selectedVariant) {
+    } else {
+      return product?.children?.defaultImage
+    }
   }
 
   const VariantIcons = (product: any) => {
-    console.log('varitan', product?.product)
-    if (product?.option?.label == selectedVariant) {
+    if (product?.option?.isDefault) {
       return (
         <button onClick={() => setVariant(product?.product, product?.option)}>
           <span
@@ -77,7 +89,7 @@ export const ProductGrid = forwardRef(function ProductGrid(
                 <Image
                   width="200"
                   height="200"
-                  src={ProductImage(product)}
+                  src={selectedVariantImage || ProductImage(product)}
                   alt={product?.children?.primary_image?.name}
                 />
               )}
