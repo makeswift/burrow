@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 
-import { Checkbox, Combobox, List, Style } from '@makeswift/runtime/controls'
+import { Checkbox, Combobox, List, Number, Style } from '@makeswift/runtime/controls'
 import { forwardNextDynamicRef } from '@makeswift/runtime/next'
 
 import { ProductsCarouselProductsDocument } from '@/generated/graphql'
@@ -31,6 +31,12 @@ export const props = {
     getItemLabel(item) {
       return item?.label ?? 'Product Name'
     },
+  }),
+  itemsShown: Number({
+    label: 'Items Shown',
+    defaultValue: 4,
+    min: 1,
+    max: 10,
   }),
 }
 

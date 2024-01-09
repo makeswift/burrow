@@ -66,6 +66,15 @@ fragment ProductsCarouselVariant on Variant {
       value
     }
   }
+  metafields(namespace: "image1", keys: ["image1"], first: 2) {
+    edges {
+      node {
+        key
+        id
+        value
+      }
+    }
+  }
 }
 
 fragment ProductsCarouselProduct on Product {
