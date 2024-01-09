@@ -8,9 +8,9 @@ const config: CodegenConfig = {
     'generated/graphql.ts': {
       documents: './components/**/*.graphql',
       schema: {
-        [`${process.env.BIGCOMMERCE_STOREFRONT_URL}`]: {
+        [`${process.env.NEXT_PUBLIC_BIGCOMMERCE_STOREFRONT_URL}`]: {
           headers: {
-            Authorization: `Bearer ${process.env.BIGCOMMERCE_STOREFRONT_API_TOKEN}`,
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_BIGCOMMERCE_STOREFRONT_API_TOKEN}`,
           },
         },
       },

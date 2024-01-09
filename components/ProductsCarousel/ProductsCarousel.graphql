@@ -10,7 +10,66 @@ query ProductsCarouselProducts {
   }
 }
 
+fragment ProductsCarouselProductOption on CatalogProductOption {
+  __typename
+  entityId
+  displayName
+  isRequired
+  ... on CheckboxOption {
+    checkedByDefault
+  }
+  ... on MultipleChoiceOption {
+    values(first: 5) {
+      edges {
+        node {
+          __typename
+          entityId
+          label
+          isDefault
+          ... on SwatchOptionValue {
+            hexColors
+          }
+          isSelected
+        }
+      }
+    }
+  }
+}
+
+fragment ProductsCarouselVariant on Variant {
+  id
+  sku
+  defaultImage {
+    url(width: 1000)
+    isDefault
+  }
+  entityId
+  options {
+    edges {
+      node {
+        displayName
+        values {
+          edges {
+            node {
+              label
+              entityId
+            }
+          }
+        }
+        entityId
+      }
+    }
+  }
+  prices {
+    price {
+      currencyCode
+      value
+    }
+  }
+}
+
 fragment ProductsCarouselProduct on Product {
+  __typename
   id
   name
   path
@@ -18,62 +77,24 @@ fragment ProductsCarouselProduct on Product {
   defaultImage {
     urlOriginal
   }
-  variants(first: 100) {
-    edges {
-      node {
-        sku
-        defaultImage {
-          url(width: 1000)
-          isDefault
-        }
-        entityId
-        id
-        options {
-          edges {
-            node {
-              displayName
-              values {
-                edges {
-                  node {
-                    label
-                    entityId
-                  }
-                }
-              }
-              entityId
-            }
-          }
-        }
-      }
-    }
-  }
   productOptions(first: 5) {
     edges {
       node {
-        entityId
-        displayName
-        isRequired
-        ... on CheckboxOption {
-          checkedByDefault
-        }
-        ... on MultipleChoiceOption {
-          values(first: 5) {
-            edges {
-              node {
-                entityId
-                label
-                isDefault
-                ... on SwatchOptionValue {
-                  hexColors
-                  label
-                  entityId
-                }
-                isSelected
-              }
-            }
-          }
-        }
+        ...ProductsCarouselProductOption
       }
+    }
+  }
+  variants(first: 100) {
+    edges {
+      node {
+        ...ProductsCarouselVariant
+      }
+    }
+  }
+  prices {
+    price {
+      currencyCode
+      value
     }
   }
 }
