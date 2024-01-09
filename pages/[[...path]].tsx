@@ -1,15 +1,19 @@
 import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 
 import { Page as MakeswiftPage, PageProps as MakeswiftPageProps } from '@makeswift/runtime/next'
+import { SWRConfig } from 'swr'
 
-import { client } from '@/lib/makeswift/client'
+import { ProductsCarousel } from '@/components/ProductsCarousel'
+import { ProductsCarouselProductsDocument } from '@/generated/graphql'
+import { client as bigcommerce } from '@/lib/bigcommerce/client'
+import { client as makeswift } from '@/lib/makeswift/client'
 import '@/lib/makeswift/components'
 import { runtime } from '@/lib/makeswift/runtime'
 
 type ParsedUrlQuery = { path?: string[] }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult<ParsedUrlQuery>> {
-  const pages = await client.getPages()
+  const pages = await makeswift.getPages()
 
   return {
     paths: pages.map(page => ({
@@ -21,19 +25,28 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult<ParsedUrlQu
   }
 }
 
-type Props = MakeswiftPageProps
+type Props = MakeswiftPageProps & { fallback: { [key: string]: unknown } }
 
 export async function getStaticProps(
   ctx: GetStaticPropsContext<ParsedUrlQuery>
 ): Promise<GetStaticPropsResult<Props>> {
   const path = '/' + (ctx.params?.path ?? []).join('/')
-  const snapshot = await client.getPageSnapshot(path, { preview: ctx.preview })
+  const snapshot = await makeswift.getPageSnapshot(path, { preview: ctx.preview })
 
   if (snapshot == null) return { notFound: true }
 
-  return { props: { snapshot } }
+  return {
+    props: {
+      snapshot,
+      fallback: { products: await bigcommerce.request(ProductsCarouselProductsDocument) },
+    },
+  }
 }
 
-export default function Page({ snapshot }: Props) {
-  return <MakeswiftPage snapshot={snapshot} runtime={runtime} />
+export default function Page({ snapshot, fallback }: Props) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <MakeswiftPage snapshot={snapshot} runtime={runtime} />
+    </SWRConfig>
+  )
 }

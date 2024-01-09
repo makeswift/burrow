@@ -14,7 +14,7 @@ export const props = {
     label: 'Show Variant Options',
     defaultValue: true,
   }),
-  products: List({
+  productIds: List({
     label: 'Products',
     type: Combobox({
       label: 'Product name',
@@ -26,9 +26,9 @@ export const props = {
           .filter(exists)
           .filter(p => !query || p.name.includes(query))
           .map(product => ({
-            id: product.sku,
+            id: product.id,
             label: product.name,
-            value: product,
+            value: product.id,
           }))
       },
     }),
