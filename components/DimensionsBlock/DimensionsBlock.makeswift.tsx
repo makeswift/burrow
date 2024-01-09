@@ -17,20 +17,48 @@ runtime.registerComponent(
         label: 'Collections',
         type: Shape({
           type: {
-            title: TextInput({ label: 'Title', defaultValue: 'Collection' }),
+            name: TextInput({ label: 'Title', defaultValue: 'Collection', selectAll: true }),
             description: TextArea({
               label: 'Description',
               defaultValue:
                 'A vintage-inspired, mid-century silhouette offers an upright sit, perfect for conversation, reading, or working from the couch.',
+              selectAll: true,
+            }),
+            mobileDescription: TextInput({
+              label: 'Mobile description',
+              defaultValue: 'Mid-century modularity',
+              selectAll: true,
             }),
             link: Link({ label: 'Button Link' }),
             buttonText: TextInput({ label: 'Button Text', defaultValue: 'Shop Collection' }),
-            image: Image({ label: 'Image', format: Image.Format.WithDimensions }),
-            imageAlt: TextInput({ label: 'Image Alt Text', defaultValue: 'Collection dimensions' }),
+            desktopImage: Image({ label: 'Desktop image', format: Image.Format.WithDimensions }),
+            desktopImageAlt: TextInput({
+              label: 'Image Alt Text',
+              defaultValue: 'Collection dimensions',
+              selectAll: true,
+            }),
+            mobileSofaImage: Image({
+              label: 'Mobile sofa image',
+              format: Image.Format.WithDimensions,
+            }),
+            mobileSofaImageAlt: TextInput({
+              label: 'Image Alt Text',
+              defaultValue: 'Collection dimensions',
+              selectAll: true,
+            }),
+            mobileDimensionsImage: Image({
+              label: 'Mobile dimensions image',
+              format: Image.Format.WithDimensions,
+            }),
+            mobileDimensionsImageAlt: TextInput({
+              label: 'Image Alt Text',
+              defaultValue: 'Collection dimensions',
+              selectAll: true,
+            }),
           },
         }),
         getItemLabel(collection) {
-          return collection?.title || 'Collection'
+          return collection?.name || 'Collection'
         },
       }),
       className: Style(),
