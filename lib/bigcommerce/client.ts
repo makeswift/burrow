@@ -1,18 +1,12 @@
-// @ts-ignore
-import * as BigCommerce from 'node-bigcommerce'
+import { strict } from 'assert'
+import { GraphQLClient } from 'graphql-request'
 
+strict(process.env.NEXT_PUBLIC_BIGCOMMERCE_STOREFRONT_URL)
+strict(process.env.NEXT_PUBLIC_BIGCOMMERCE_STOREFRONT_API_TOKEN)
 
-const { BIGCOMMERCE_STORE_API_CLIENT_ID, BIGCOMMERCE_STORE_HASH , BIGCOMMERCE_STORE_API_TOKEN } = process.env
-
-
-
-
-    export function bigcommerceClient(apiVersion = 'v3') {
-        return new BigCommerce({
-            clientId: BIGCOMMERCE_STORE_API_CLIENT_ID,
-            BIGCOMMERCE_STORE_API_TOKEN,
-            BIGCOMMERCE_STORE_HASH,
-            responseType: 'json',
-            apiVersion,
-        });
-    }
+export const client = new GraphQLClient(process.env.NEXT_PUBLIC_BIGCOMMERCE_STOREFRONT_URL, {
+  headers: {
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_BIGCOMMERCE_STOREFRONT_API_TOKEN}`,
+    // 'X-Exclude-Invalid': 'true',
+  },
+})
