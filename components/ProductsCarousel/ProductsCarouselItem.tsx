@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ComponentPropsWithoutRef, useState } from 'react'
 
+import clsx from 'clsx'
+
 import {
   ProductsCarouselProductFragment,
   ProductsCarouselVariantFragment,
@@ -93,7 +95,12 @@ export const ProductsCarouselItem = ({ product, ...rest }: Props) => {
                       case 'SwatchOptionValue':
                         return (
                           <button
-                            className="h-7 w-7 rounded-full p-1"
+                            className={clsx(
+                              'h-7 w-7 rounded-full p-1',
+                              option.entityId === selectedOption.optionEntityId &&
+                                value.entityId === selectedOption.valueEntityId &&
+                                'ring-2 ring-black'
+                            )}
                             key={value.entityId}
                             onClick={() =>
                               setSelectedOption({
