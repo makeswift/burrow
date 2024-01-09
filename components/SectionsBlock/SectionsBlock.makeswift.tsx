@@ -17,6 +17,7 @@ runtime.registerComponent(
       description: TextArea({
         label: 'Description',
         defaultValue: 'Time Magazine’s Best Invention of 2018, and still going strong.',
+        selectAll: true,
       }),
       link: Link({ label: 'Button Link' }),
       buttonText: TextInput({ label: 'Button Text', defaultValue: 'Shop Collection' }),
@@ -24,9 +25,14 @@ runtime.registerComponent(
       desktopImageAlt: TextInput({
         label: 'Desktop image alt text',
         defaultValue: 'Image of couch',
+        selectAll: true,
       }),
       mobileImage: Image({ label: 'Mobile Image', format: Image.Format.WithDimensions }),
-      mobileImageAlt: TextInput({ label: 'Mobile image alt text', defaultValue: 'Image of couch' }),
+      mobileImageAlt: TextInput({
+        label: 'Mobile image alt text',
+        defaultValue: 'Image of couch',
+        selectAll: true,
+      }),
       className: Style(),
     },
   }

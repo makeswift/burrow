@@ -17,10 +17,11 @@ runtime.registerComponent(
       label: TextInput({
         label: 'Subscription Label',
         defaultValue: 'Sign up for enthralling couch reads',
+        selectAll: true,
       }),
       color: Color({ label: 'Form Color', defaultValue: '#f7eee3' }),
       buttonTextColor: Color({ label: 'Button Text Color', defaultValue: '#4A4A4A' }),
-      buttonText: TextInput({ label: 'Button Text', defaultValue: 'Subscribe' }),
+      buttonText: TextInput({ label: 'Button Text', defaultValue: 'Subscribe', selectAll: true }),
     },
   }
 )
