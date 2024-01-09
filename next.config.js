@@ -4,7 +4,7 @@ const withMakeswift = require('@makeswift/runtime/next/plugin')()
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['cdn11.bigcommerce.com'],
+    domains: ['cdn11.bigcommerce.com', 'media.graphassets.com'],
   },
 }
 
