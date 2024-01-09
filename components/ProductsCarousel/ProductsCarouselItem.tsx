@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { ComponentPropsWithoutRef, useState } from 'react'
 
 import {
   ProductsCarouselProductFragment,
@@ -32,11 +32,11 @@ function findVariant(
   })
 }
 
-interface Props {
+interface Props extends ComponentPropsWithoutRef<'div'> {
   product: ProductsCarouselProductFragment
 }
 
-export const ProductsCarouselItem = ({ product }: Props) => {
+export const ProductsCarouselItem = ({ product, ...rest }: Props) => {
   const productOptions = removeEdgesAndNodes(product.productOptions)
   const variants = removeEdgesAndNodes(product.variants)
   const defaultVariantOption = removeEdgesAndNodes(variants[0].options)[0]
@@ -58,7 +58,7 @@ export const ProductsCarouselItem = ({ product }: Props) => {
   // })
 
   return (
-    <div>
+    <div {...rest}>
       <div className="group relative cursor-pointer">
         {activeImageUrl && (
           <Image

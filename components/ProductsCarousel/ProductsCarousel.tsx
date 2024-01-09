@@ -1,4 +1,4 @@
-import { Ref, forwardRef, useEffect, useState } from 'react'
+import { Ref, forwardRef } from 'react'
 
 import { useKeenSlider } from 'keen-slider/react'
 import debounce from 'lodash.debounce'
@@ -6,11 +6,7 @@ import useSWR from 'swr'
 import tailwindConfig from 'tailwind.config'
 import resolveConfig from 'tailwindcss/resolveConfig'
 
-import {
-  ProductsCarouselProductFragment,
-  ProductsCarouselProductsDocument,
-  ProductsCarouselVariantFragment,
-} from '@/generated/graphql'
+import { ProductsCarouselProductsDocument } from '@/generated/graphql'
 import { client } from '@/lib/bigcommerce/client'
 import { exists } from '@/lib/utils/exists'
 import { removeEdgesAndNodes } from '@/lib/utils/removeEdgesAndNodes'
@@ -53,7 +49,7 @@ function getTabletBreakpoint() {
 }
 
 export const ProductsCarousel = forwardRef(function ProductsCarousel(
-  { className, itemsShown = 3, loop = true, productIds }: Props,
+  { className, itemsShown = 3, productIds }: Props,
   ref: Ref<HTMLDivElement>
 ) {
   const results = useSWR('products', () => client.request(ProductsCarouselProductsDocument))
@@ -63,14 +59,13 @@ export const ProductsCarousel = forwardRef(function ProductsCarousel(
     {
       breakpoints: {
         [getTabletBreakpoint()]: {
-          slides: { perView: 2, origin: 'auto', spacing: 24 },
+          slides: { perView: 2, origin: 'auto' },
         },
         [getMobileBreakpoint()]: {
           slides: { perView: 1, origin: 'auto' },
         },
       },
-      slides: { perView: itemsShown, origin: 'auto', spacing: 32 },
-      loop,
+      slides: { perView: itemsShown, origin: 'auto' },
       selector: ':scope > div',
     },
     [
@@ -119,14 +114,22 @@ export const ProductsCarousel = forwardRef(function ProductsCarousel(
             className="focus:outline-0"
           >
             <div
-              className="flex w-full touch-pan-y select-none items-start overflow-hidden focus:outline-0"
+              className="flex w-full touch-pan-y select-none flex-nowrap items-start overflow-hidden focus:outline-0"
               ref={sliderRef}
             >
               {productIds
                 .map(id => products.find(p => p.id === id))
                 .filter(exists)
                 .map((product, index) => (
-                  <ProductsCarouselItem key={`${product.id}:${index}`} product={product} />
+                  <ProductsCarouselItem
+                    className="px-3"
+                    style={{
+                      flexBasis: (1 / itemsShown) * 100 + '%',
+                      minWidth: (1 / itemsShown) * 100 + '%',
+                    }}
+                    key={`${product.id}:${index}`}
+                    product={product}
+                  />
                 ))}
             </div>
           </div>
