@@ -10,10 +10,6 @@ import { exists } from '@/lib/utils/exists'
 
 export const props = {
   className: Style(),
-  variantOptionShown: Checkbox({
-    label: 'Show Variant Options',
-    defaultValue: true,
-  }),
   productIds: List({
     label: 'Products',
     type: Combobox({
@@ -32,7 +28,6 @@ export const props = {
           }))
       },
     }),
-
     getItemLabel(item) {
       return item?.label ?? 'Product Name'
     },

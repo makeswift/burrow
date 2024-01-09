@@ -55,53 +55,59 @@ export const ProductsCarouselItem = ({ product }: Props) => {
     <div>
       <Link href={product.path}>
         {activeImageUrl && (
-          <Image width="200" height="200" src={activeImageUrl} alt={`Image for ${product.name}`} />
+          <Image
+            width="200"
+            height="200"
+            src={activeImageUrl}
+            alt={`Image for ${product.name}`}
+            className="aspect-video w-full"
+          />
         )}
       </Link>
-      <div className="grid  grid-cols-3">
-        <div className="grid grid-cols-3  pt-3">
-          {productOptions.map(option => {
-            switch (option.__typename) {
-              case 'MultipleChoiceOption': {
-                const values = removeEdgesAndNodes(option.values)
 
-                return (
-                  <div key={option.entityId}>
-                    <div>{option.displayName}</div>
-                    <div>
-                      {values.map(value => {
-                        switch (value.__typename) {
-                          case 'SwatchOptionValue':
-                            return (
-                              <button
-                                className="bg-slate-50 p-4"
-                                key={value.entityId}
-                                onClick={() =>
-                                  setSelectedOption({
-                                    optionEntityId: option.entityId,
-                                    valueEntityId: value.entityId,
-                                  })
-                                }
-                              >
-                                {value.hexColors}
-                              </button>
-                            )
-                        }
-                      })}
-                    </div>
-                  </div>
-                )
-              }
-              default: {
-                return null
-              }
+      <div className="mt-3">
+        {productOptions.map(option => {
+          switch (option.__typename) {
+            case 'MultipleChoiceOption': {
+              const values = removeEdgesAndNodes(option.values)
+
+              return (
+                <div key={option.entityId} className="flex flex-wrap gap-2">
+                  {values.map(value => {
+                    switch (value.__typename) {
+                      case 'SwatchOptionValue':
+                        return (
+                          <button
+                            className="h-7 w-7 rounded-full p-1"
+                            key={value.entityId}
+                            onClick={() =>
+                              setSelectedOption({
+                                optionEntityId: option.entityId,
+                                valueEntityId: value.entityId,
+                              })
+                            }
+                          >
+                            <span
+                              className="block h-full w-full rounded-full"
+                              style={{ backgroundColor: value.hexColors[0] }}
+                            />
+                          </button>
+                        )
+                    }
+                  })}
+                </div>
+              )
             }
-          })}
-        </div>
+            default: {
+              return null
+            }
+          }
+        })}
       </div>
-      <Link href={product.path}>
-        <div className="font-bold">{product.name}</div>
-        <div className="text-sm">${product.prices?.price.value}</div>
+
+      <Link href={product.path} className="text-xs leading-normal">
+        <div className="mt-2 text-gray-400">{product.name}</div>
+        <div className="text-gray-100">${product.prices?.price.value}</div>
       </Link>
     </div>
   )
