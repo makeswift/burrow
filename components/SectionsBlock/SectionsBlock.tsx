@@ -1,38 +1,86 @@
+import Image from 'next/image'
 import React, { Ref, forwardRef } from 'react'
 
 import clsx from 'clsx'
 
-type Section = {
-    bgImage: string
-    title: string
-    description: string
-    link: {
-        href: string
-        target: string
-    }
-    buttonText: string
-}
+import { Button } from '../Button'
 
 type Props = {
-  section: Section
+  className?: string
+  desktopImage?: { url: string; dimensions: { width: number; height: number } }
+  desktopImageAlt: string
+  mobileImage?: { url: string; dimensions: { width: number; height: number } }
+  mobileImageAlt: string
+  title?: string
+  description?: string
+  link?: { href: string; target?: string }
+  buttonText?: string
 }
 
 export const SectionsBlock = forwardRef(function SectionsBlock(
-  { section }: Props,
+  {
+    className,
+    desktopImage,
+    desktopImageAlt,
+    mobileImage,
+    mobileImageAlt,
+    title,
+    description,
+    link,
+    buttonText,
+  }: Props,
   ref: Ref<HTMLDivElement>
 ) {
-    const background = `url(${section.bgImage})`
-    return (
-        <div ref={ref} className="container" style={{'height': '576px'}}>
-            <div className="flex flex-row gap-1 items-start" style={{background, 'background-size': 'contain', 'background-repeat': 'no-repeat', 'height': '100%'}}>
-                <div className="flex-1 flex-column pl-12 basis-1/4 pr-4 pt-6 items-center">
-                    <p className="text-left text-2xl pb-2">{section.title}</p>
-                    <p className="text-left text-sm pb-6 font-light" style={{'max-width': '25%'}}>{section.description}</p>
-                    <a href={section.link.href} target={section.link.target} className='inline-flex items-center h-8 px-10 py-6 tracking-widest text-sm text-neutral-700 transition-colors duration-150 bg-canary-100 focus:shadow-outline hover:bg-canary-100 uppercase'>
-                        {section.buttonText}
-                    </a>
-                </div>
-            </div>
+  return (
+    <div ref={ref} className={clsx(className, '@container min-h-[200px]')}>
+      <div className="relative">
+        <div className="absolute inset-x-0 top-0 flex h-full flex-col items-center justify-between px-16 py-5 sm:block sm:h-auto sm:items-start sm:justify-start">
+          <div className="max-w-full text-center sm:max-w-xs sm:text-left">
+            <h2 className="text-lg sm:text-xl lg:text-3xl">{title}</h2>
+            <p className="mt-3 block text-sm font-light sm:mt-4 sm:hidden lg:block">
+              {description}
+            </p>
+          </div>
+
+          <Button
+            color="canary"
+            size="small"
+            link={link as { href: string; target?: '_self' | '_blank' | undefined }}
+            className="mt-6 lg:hidden"
+          >
+            {buttonText}
+          </Button>
+
+          <Button
+            color="canary"
+            size="large"
+            link={link as { href: string; target?: '_self' | '_blank' | undefined }}
+            className="mt-6 hidden lg:inline-block"
+          >
+            {buttonText}
+          </Button>
         </div>
-    )
+
+        {desktopImage && (
+          <Image
+            src={desktopImage.url}
+            alt={desktopImageAlt}
+            width={desktopImage.dimensions.width}
+            height={desktopImage.dimensions.height}
+            className="hidden w-full sm:block"
+          />
+        )}
+
+        {mobileImage && (
+          <Image
+            src={mobileImage.url}
+            alt={mobileImageAlt}
+            width={mobileImage.dimensions.width}
+            height={mobileImage.dimensions.height}
+            className="w-full sm:hidden"
+          />
+        )}
+      </div>
+    </div>
+  )
 })

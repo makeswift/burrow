@@ -1,38 +1,62 @@
+import Image from 'next/image'
 import React, { Ref, forwardRef } from 'react'
 
 import clsx from 'clsx'
 
-type Description = {
-  title: string
-  description: string
-  descImage: string
-  link: {
-    href: string
-    target: string
-  }
-  buttonText: string
+import { Button } from '../Button'
+import { Warning } from '../Warning'
+
+type Collection = {
+  title?: string
+  description?: string
+  image?: { url: string; dimensions: { width: number; height: number } }
+  imageAlt: string
+  link?: { href: string; target?: string }
+  buttonText?: string
 }
 
 type Props = {
-  description: Description
+  className?: string
+  collections: Collection[]
 }
 
-export const DimensionsBlock = forwardRef<HTMLDivElement, Props>((
-  { description }: Props,
-  ref: Ref<HTMLDivElement>
-) => {
-  return (
-    <div ref={ref} className="container">
-      <div className="flex flex-row gap-1 items-center">
-        <div className="flex-1 flex-column pl-12 basis-1/4 pr-4 items-center">
-          <p className="text-left text-2xl pb-2">{description.title}</p>
-          <p className="text-left text-xs pb-6 font-extralight">{description.description}</p>
-          <a href={description.link.href} target={description.link.target} className='inline-flex items-center h-8 px-6 py-4 text-xs text-neutral-950 transition-colors duration-150 bg-beige-100 focus:shadow-outline hover:bg-orange-200 uppercase'>
-            {description.buttonText}
-          </a>
-        </div>
-        <img src={description.descImage} className="flex-1 basis-3/4"/>
+export const DimensionsBlock = forwardRef<HTMLDivElement, Props>(
+  ({ className, collections }: Props, ref: Ref<HTMLDivElement>) => {
+    if (collections?.length === 0)
+      return <Warning className={className}>No collections have been added</Warning>
+
+    return (
+      <div ref={ref} className={clsx(className, '@container')}>
+        {collections.map((collection, index) => (
+          <div
+            className="border-beige-200 flex items-center gap-5 border-b py-4 last:border-transparent"
+            key={index}
+          >
+            <div className="w-52 text-gray-400">
+              <h2 className="mb-1 text-2xl">{collection.title}</h2>
+              <p className="text-xs font-extralight leading-normal">{collection.description}</p>
+              <Button
+                color="beige"
+                size="small"
+                link={collection.link as { href: string; target?: '_self' | '_blank' | undefined }}
+                className="mt-4"
+              >
+                {collection.buttonText}
+              </Button>
+            </div>
+
+            {collection.image && (
+              <Image
+                src={collection.image.url}
+                alt={collection.imageAlt}
+                width={collection.image.dimensions.width}
+                height={collection.image.dimensions.height}
+                className="w-full flex-1"
+              />
+            )}
+          </div>
+        ))}
       </div>
-    </div>
-  )
-})
+    )
+  }
+)
