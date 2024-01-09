@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import React, { Ref, forwardRef } from 'react'
 
 import clsx from 'clsx'
@@ -34,7 +33,7 @@ export const DimensionsBlock = forwardRef<HTMLDivElement, Props>(
             key={index}
           >
             <div className="w-52 text-gray-400">
-              <p className="pb-2 text-2xl">{collection.title}</p>
+              <h2 className="mb-1 text-2xl">{collection.title}</h2>
               <p className="text-xs font-extralight leading-normal">{collection.description}</p>
               <Button
                 color="beige"

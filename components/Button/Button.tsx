@@ -9,8 +9,8 @@ export const COLOR_STYLES = {
 } as const
 
 export const SIZE_STYLES = {
-  small: 'text-xs py-1.5 px-5 leading-5',
-  large: 'text-sm py-3 px-9',
+  small: 'text-xs py-1.5 px-5',
+  large: 'text-sm py-3 px-8',
 } as const
 
 type BaseButtonProps = {
@@ -38,7 +38,7 @@ export const Button = forwardRef(function Button(
         className,
         COLOR_STYLES[color],
         SIZE_STYLES[size],
-        'inline-block text-center uppercase tracking-wide transition-transform duration-200 hover:-translate-y-1'
+        'inline-block text-center uppercase leading-relaxed tracking-wide transition-transform duration-200 hover:-translate-y-1'
       )}
       href={link?.href ?? ''}
       target={link?.target}
