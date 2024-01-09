@@ -21,6 +21,7 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "clsx": "^2.0.0",
     "graphql-request": "^6.1.0",
+    "keen-slider": "^6.8.6",
     "lodash.debounce": "^4.0.8",
     "next": "13.2.1",
     "node-bigcommerce": "^4.1.0",

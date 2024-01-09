@@ -41,6 +41,9 @@ dependencies:
   graphql-request:
     specifier: ^6.1.0
     version: 6.1.0(graphql@16.8.0)
+  keen-slider:
+    specifier: ^6.8.6
+    version: 6.8.6
   lodash.debounce:
     specifier: ^4.0.8
     version: 4.0.8
@@ -4636,6 +4639,10 @@ packages:
       object.assign: 4.1.4
       object.values: 1.1.7
     dev: true
+
+  /keen-slider@6.8.6:
+    resolution: {integrity: sha512-dcEQ7GDBpCjUQA8XZeWh3oBBLLmyn8aoeIQFGL/NTVkoEOsmlnXqA4QykUm/SncolAZYGsEk/PfUhLZ7mwMM2w==}
+    dev: false
 
   /keyv@4.5.3:
     resolution: {integrity: sha512-QCiSav9WaX1PgETJ+SpNnx2PRRapJ/oRSXM4VO5OGYGSjrxbKPVFVhB3l2OCbLCk329N8qyAtsJjSjvVBWzEug==}
