@@ -1,0 +1,100 @@
+query ProductsCarouselProducts {
+  site {
+    products {
+      edges {
+        node {
+          ...ProductsCarouselProduct
+        }
+      }
+    }
+  }
+}
+
+fragment ProductsCarouselProductOption on CatalogProductOption {
+  __typename
+  entityId
+  displayName
+  isRequired
+  ... on CheckboxOption {
+    checkedByDefault
+  }
+  ... on MultipleChoiceOption {
+    values(first: 5) {
+      edges {
+        node {
+          __typename
+          entityId
+          label
+          isDefault
+          ... on SwatchOptionValue {
+            hexColors
+          }
+          isSelected
+        }
+      }
+    }
+  }
+}
+
+fragment ProductsCarouselVariant on Variant {
+  id
+  sku
+  defaultImage {
+    url(width: 1000)
+    isDefault
+  }
+  entityId
+  options {
+    edges {
+      node {
+        displayName
+        values {
+          edges {
+            node {
+              label
+              entityId
+            }
+          }
+        }
+        entityId
+      }
+    }
+  }
+  prices {
+    price {
+      currencyCode
+      value
+    }
+  }
+}
+
+fragment ProductsCarouselProduct on Product {
+  __typename
+  id
+  name
+  path
+  sku
+  defaultImage {
+    urlOriginal
+  }
+  productOptions(first: 5) {
+    edges {
+      node {
+        ...ProductsCarouselProductOption
+      }
+    }
+  }
+  variants(first: 100) {
+    edges {
+      node {
+        ...ProductsCarouselVariant
+      }
+    }
+  }
+  prices {
+    price {
+      currencyCode
+      value
+    }
+  }
+}
