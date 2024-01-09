@@ -11,7 +11,7 @@ runtime.registerComponent(
   ),
   {
     type: 'DimensionsBlock',
-    label: 'BigCommerce / DimensionsBlock',
+    label: 'BigCommerce / Dimensions Block',
     props: {
       collections: List({
         label: 'Collections',
