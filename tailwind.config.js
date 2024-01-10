@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
+        header: ['var(--font-gt-america)', 'sans-serif'],
+        sans: ['var(--font-nuzeit)', 'sans-serif'],
       },
       keyframes: {
         expand: {
@@ -15,6 +16,10 @@ module.exports = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: 0 },
         },
+        revealRight: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
         scrollLeft: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-100%)' },
@@ -23,6 +28,7 @@ module.exports = {
       animation: {
         expand: 'expand 400ms cubic-bezier(1, 0, 0.25, 1)',
         collapse: 'collapse 400ms cubic-bezier(1, 0, 0.25, 1)',
+        revealRight: 'revealRight 400ms forwards cubic-bezier(0, 1, 0.25, 1)',
         scrollLeft: 'scrollLeft var(--marquee-duration) linear infinite',
       },
       colors: {

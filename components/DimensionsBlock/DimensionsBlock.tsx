@@ -44,7 +44,7 @@ export const DimensionsBlock = forwardRef(function DimensionsBlock(
             className="border-beige-200 flex items-center gap-5 border-b py-4 last:border-transparent"
           >
             <div className="w-52 text-gray-400">
-              <h2 className="mb-1 text-2xl">{collection.name}</h2>
+              <h2 className="font-header mb-1 text-3xl">{collection.name}</h2>
               <p className="text-xs font-extralight leading-normal">{collection.description}</p>
               <Button
                 color="beige"
@@ -80,7 +80,7 @@ export const DimensionsBlock = forwardRef(function DimensionsBlock(
           >
             <Accordion.Header className="flex items-center gap-4 py-3">
               <div className="flex-1 text-gray-400">
-                <h2 className="mb-1 text-base">{collection.name}</h2>
+                <h2 className="font-header mb-1 text-base">{collection.name}</h2>
                 <p className="text-xs font-extralight leading-normal">
                   {collection.mobileDescription}
                 </p>

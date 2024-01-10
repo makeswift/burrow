@@ -18,7 +18,6 @@ type SubnavLink = {
 }
 
 type SubnavGroup = {
-  heading: string
   subnavLinks: SubnavLink[]
 }
 
@@ -204,16 +203,13 @@ export function Navigation({
                         <div className="flex items-start">
                           {mainNavLink.subnavGroups.map((subnavGroup, subnavGroupIndex) => (
                             <ul className="flex-1 space-y-2 leading-normal" key={subnavGroupIndex}>
-                              <li className="text-accent mb-3 text-sm font-bold uppercase">
-                                {subnavGroup.heading}
-                              </li>
                               {subnavGroup.subnavLinks.map((subnavLink, i) => (
                                 <li key={i}>
                                   <NavigationMenu.Link asChild>
                                     <Link
                                       href={subnavLink.link?.href ?? '#'}
                                       target={subnavLink.link?.target}
-                                      className="text-primary hover:text-accent block cursor-pointer py-2 text-sm font-bold uppercase transition-colors hover:bg-white/10"
+                                      className="hover:text-red block cursor-pointer py-2 text-sm text-gray-300 transition-colors"
                                     >
                                       {subnavLink.linkText}
                                     </Link>
@@ -279,18 +275,12 @@ export function Navigation({
                         <>
                           {mainNavLink.subnavGroups.map((subnavGroup, i) => (
                             <ul className="space-y-2 pb-2 pl-3 pt-2" key={i}>
-                              {subnavGroup.heading.length > 0 && (
-                                <li className="text-primary pt-1 text-xs font-bold uppercase opacity-50">
-                                  {subnavGroup.heading}
-                                </li>
-                              )}
-
                               {subnavGroup.subnavLinks.map((subnavLink, footerSubnavLinkIndex) => (
                                 <li key={footerSubnavLinkIndex}>
                                   <Link
                                     href={subnavLink.link?.href ?? '#'}
                                     target={subnavLink.link?.target}
-                                    className="text-primary block text-sm font-bold uppercase leading-normal"
+                                    className="block text-sm leading-normal text-gray-300"
                                   >
                                     {subnavLink.linkText}
                                   </Link>
@@ -305,7 +295,7 @@ export function Navigation({
                     <Link
                       href={mainNavLink.link?.href ?? '#'}
                       target={mainNavLink.link?.target}
-                      className="text-primary block py-1 text-sm font-bold uppercase leading-normal outline-none"
+                      className="block py-1 text-sm leading-normal text-gray-300 outline-none"
                     >
                       {mainNavLink.text}
                     </Link>

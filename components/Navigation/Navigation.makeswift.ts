@@ -67,11 +67,6 @@ runtime.registerComponent(Navigation, {
             label: 'Subnav groups',
             type: Shape({
               type: {
-                heading: TextInput({
-                  label: 'Heading',
-                  defaultValue: 'Heading',
-                  selectAll: true,
-                }),
                 subnavLinks: List({
                   label: 'Links',
                   type: Shape({
@@ -90,8 +85,8 @@ runtime.registerComponent(Navigation, {
                 }),
               },
             }),
-            getItemLabel(subnavGroup) {
-              return subnavGroup?.heading || 'Heading'
+            getItemLabel() {
+              return 'Column'
             },
           }),
         },
