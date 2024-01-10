@@ -130,6 +130,7 @@ export const ProductsCarousel = forwardRef(function ProductsCarousel(
             <>
               <button
                 onClick={prevSlide}
+                aria-label="Previous product"
                 className="group absolute left-4 top-1/3 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg shadow-black/25 transition duration-300"
               >
                 <svg viewBox="0 0 23 18" width={12} height={10}>
@@ -142,6 +143,7 @@ export const ProductsCarousel = forwardRef(function ProductsCarousel(
 
               <button
                 onClick={nextSlide}
+                aria-label="Next product"
                 className="group absolute right-4 top-1/3 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg shadow-black/25 transition duration-300"
               >
                 <svg viewBox="0 0 23 18" width={12} height={10}>

@@ -284,7 +284,7 @@ export function Navigation({
           </div>
 
           <div className="@2xl:gap-x-6 flex flex-1 items-center justify-end gap-x-4 stroke-gray-300">
-            <Link href="">
+            <Link href="" aria-label="Search">
               <svg
                 className="w-6 py-2"
                 viewBox="0 0 24 24"
@@ -299,7 +299,7 @@ export function Navigation({
               </svg>
             </Link>
 
-            <Link href="" className="@lg:block hidden">
+            <Link href="" className="@lg:block hidden" aria-label="Profile">
               <svg
                 className="w-6 py-2"
                 viewBox="0 0 24 24"
@@ -314,7 +314,7 @@ export function Navigation({
               </svg>
             </Link>
 
-            <Link href="">
+            <Link href="" aria-label="Shopping cart">
               <svg
                 className="w-6 py-2"
                 viewBox="0 0 24 24"
