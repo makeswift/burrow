@@ -27,5 +27,5 @@ runtime.registerComponent(
   forwardNextDynamicRef(patch =>
     dynamic(() => patch(import('./Slider').then(({ Slider }) => Slider)))
   ),
-  { type: 'Slider', label: 'Slider', props }
+  { type: 'Slider', label: 'BigCommerce / Slider', props }
 )
