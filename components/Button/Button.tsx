@@ -43,7 +43,7 @@ export const Button = forwardRef(function Button(
       href={link?.href ?? ''}
       target={link?.target}
       onClick={onClick}
-      aria-label="button"
+      aria-label={children?.toString()}
     >
       {children}
     </Link>

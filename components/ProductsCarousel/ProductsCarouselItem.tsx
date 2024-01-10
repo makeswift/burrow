@@ -109,6 +109,7 @@ export const ProductsCarouselItem = ({ product, ...rest }: Props) => {
                                 valueEntityId: value.entityId,
                               })
                             }
+                            aria-label={value.hexColors[0]}
                           >
                             <span
                               className="block h-full w-full rounded-full"
