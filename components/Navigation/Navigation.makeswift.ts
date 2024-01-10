@@ -89,6 +89,31 @@ runtime.registerComponent(Navigation, {
               return 'Column'
             },
           }),
+          featureLinks: List({
+            label: 'Feature links',
+            type: Shape({
+              type: {
+                image: Image({
+                  label: 'Image',
+                  format: Image.Format.WithDimensions,
+                }),
+                imageAlt: TextInput({
+                  label: 'Image alt text',
+                  defaultValue: 'Image',
+                  selectAll: true,
+                }),
+                text: TextInput({
+                  label: 'Text',
+                  defaultValue: 'Feature link',
+                  selectAll: true,
+                }),
+                link: Link({ label: 'On click' }),
+              },
+            }),
+            getItemLabel(featureLink) {
+              return featureLink?.text || 'Feature link'
+            },
+          }),
         },
       }),
       getItemLabel(links) {

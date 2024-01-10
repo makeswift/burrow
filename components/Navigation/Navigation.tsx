@@ -1,13 +1,21 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { CSSProperties, ReactNode, useEffect, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 
 import * as Accordion from '@radix-ui/react-accordion'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
 import * as Portal from '@radix-ui/react-portal'
 import clsx from 'clsx'
 
-import { Button } from '../Button'
+type FeatureLink = {
+  image?: { url: string; dimensions: { width: number; height: number } }
+  imageAlt: string
+  text?: string
+  link?: {
+    href: string
+    target?: '_self' | '_blank'
+  }
+}
 
 type SubnavLink = {
   linkText?: string
@@ -28,6 +36,7 @@ type MainNavLink = {
     target?: '_self' | '_blank'
   }
   subnavGroups: SubnavGroup[]
+  featureLinks: FeatureLink[]
 }
 
 type TopLink = {
@@ -165,7 +174,7 @@ export function Navigation({
                         onPointerMove={event => event.preventDefault()}
                         onPointerLeave={event => event.preventDefault()}
                       >
-                        <button className="hover:text-red group flex cursor-pointer select-none items-center gap-1 py-6 text-sm text-gray-300 outline-none">
+                        <button className="hover:text-red font-header group flex cursor-pointer select-none items-center gap-1 py-4 text-sm text-gray-300 outline-none">
                           {mainNavLink.text}
 
                           <svg
@@ -187,7 +196,7 @@ export function Navigation({
                         <Link
                           href={mainNavLink.link?.href ?? '#'}
                           target={mainNavLink.link?.target}
-                          className="hover:text-red select-none py-6 text-sm text-gray-300 outline-none transition-colors"
+                          className="hover:text-red font-header select-none py-4 text-sm text-gray-300 outline-none transition-colors"
                         >
                           {mainNavLink.text}
                         </Link>
@@ -200,24 +209,50 @@ export function Navigation({
                         onPointerEnter={event => event.preventDefault()}
                         onPointerLeave={event => event.preventDefault()}
                       >
-                        <div className="flex items-start">
-                          {mainNavLink.subnavGroups.map((subnavGroup, subnavGroupIndex) => (
-                            <ul className="flex-1 space-y-2 leading-normal" key={subnavGroupIndex}>
-                              {subnavGroup.subnavLinks.map((subnavLink, i) => (
-                                <li key={i}>
-                                  <NavigationMenu.Link asChild>
-                                    <Link
-                                      href={subnavLink.link?.href ?? '#'}
-                                      target={subnavLink.link?.target}
-                                      className="hover:text-red block cursor-pointer py-2 text-sm text-gray-300 transition-colors"
-                                    >
-                                      {subnavLink.linkText}
-                                    </Link>
-                                  </NavigationMenu.Link>
-                                </li>
-                              ))}
-                            </ul>
-                          ))}
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-start gap-x-8">
+                            {mainNavLink.subnavGroups.map((subnavGroup, subnavGroupIndex) => (
+                              <ul className="w-60" key={subnavGroupIndex}>
+                                {subnavGroup.subnavLinks.map((subnavLink, i) => (
+                                  <li key={i}>
+                                    <NavigationMenu.Link asChild>
+                                      <Link
+                                        href={subnavLink.link?.href ?? '#'}
+                                        target={subnavLink.link?.target}
+                                        className="hover:text-red font-header block cursor-pointer py-1.5 text-sm leading-normal text-gray-300 transition-colors"
+                                      >
+                                        {subnavLink.linkText}
+                                      </Link>
+                                    </NavigationMenu.Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            ))}
+                          </div>
+
+                          <div className="flex items-start gap-x-4">
+                            {mainNavLink.featureLinks.map((featureLink, index) => (
+                              <NavigationMenu.Link asChild>
+                                <Link
+                                  href={featureLink.link?.href ?? '#'}
+                                  target={featureLink.link?.target}
+                                  className="hover:text-red block cursor-pointer text-sm leading-normal text-gray-300 transition-colors"
+                                >
+                                  {featureLink.image && (
+                                    <Image
+                                      src={featureLink.image.url}
+                                      alt={featureLink.imageAlt}
+                                      width={featureLink.image.dimensions.width}
+                                      height={featureLink.image.dimensions.height}
+                                      className="aspect-[4:3] w-56"
+                                    />
+                                  )}
+
+                                  <p className="font-header mt-2 text-base">{featureLink.text}</p>
+                                </Link>
+                              </NavigationMenu.Link>
+                            ))}
+                          </div>
                         </div>
                       </NavigationMenu.Content>
                     )}
@@ -225,13 +260,59 @@ export function Navigation({
                 ))}
               </NavigationMenu.List>
 
-              <div className="absolute left-0 top-full w-full">
-                <NavigationMenu.Viewport className="data-[state=closed]:animate-fadeOut data-[state=open]:animate-fadeIn overflow-hidden bg-white px-7 pb-7 pt-2 duration-300 sm:px-12" />
+              <div className="absolute inset-x-0 top-full w-full">
+                <NavigationMenu.Viewport className="data-[state=closed]:animate-fadeOut data-[state=open]:animate-fadeIn border-beige-200 overflow-hidden border-t bg-white p-4 shadow-xl shadow-black/5 duration-300 sm:p-8" />
               </div>
             </NavigationMenu.Root>
           </div>
 
-          <div className="flex">Search</div>
+          <div className="flex items-center gap-x-8 stroke-gray-300">
+            <Link href="">
+              <svg
+                className="w-6 py-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </Link>
+
+            <Link href="">
+              <svg
+                className="w-6 py-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </Link>
+
+            <Link href="">
+              <svg
+                className="w-6 py-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="8" cy="21" r="1" />
+                <circle cx="19" cy="21" r="1" />
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </header>
 
