@@ -1,21 +1,19 @@
 import { AppProps } from 'next/app'
-import { Inter } from 'next/font/google'
+
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-config.autoAddCss = false
-
 import clsx from 'clsx'
+
+import { GTAmerica } from '@/lib/fonts'
+import { Nuzeit } from '@/lib/fonts'
 
 import '../styles/globals.css'
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-})
+config.autoAddCss = false
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <main className={clsx(inter.variable, 'font-sans')}>
+    <main className={clsx(GTAmerica.variable, Nuzeit.variable, 'font-sans')}>
       <Component {...pageProps} />
     </main>
   )
