@@ -16,16 +16,15 @@ export const props = {
   color: Select({
     label: 'Color',
     options: [
-      { value: 'primary', label: 'Primary' },
-      { value: 'white', label: 'White' },
-      { value: 'accent', label: 'Accent' },
+      { value: 'beige', label: 'Beige' },
+      { value: 'canary', label: 'Canary' },
     ],
-    defaultValue: 'primary',
+    defaultValue: 'canary',
   }),
   size: Select({
     label: 'Size',
     options: [
-      { value: 'medium', label: 'Medium' },
+      { value: 'small', label: 'Small' },
       { value: 'large', label: 'Large' },
     ],
     defaultValue: 'large',

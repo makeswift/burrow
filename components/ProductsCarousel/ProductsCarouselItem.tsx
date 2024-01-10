@@ -96,10 +96,11 @@ export const ProductsCarouselItem = ({ product, ...rest }: Props) => {
                         return (
                           <button
                             className={clsx(
-                              'h-7 w-7 rounded-full p-1',
+                              'h-7 w-7 rounded-full border p-1 transition-colors duration-200',
                               option.entityId === selectedOption.optionEntityId &&
-                                value.entityId === selectedOption.valueEntityId &&
-                                'ring-2 ring-black'
+                                value.entityId === selectedOption.valueEntityId
+                                ? 'border-gray-400'
+                                : 'border-transparent'
                             )}
                             key={value.entityId}
                             onClick={() =>
@@ -127,8 +128,8 @@ export const ProductsCarouselItem = ({ product, ...rest }: Props) => {
         })}
       </div>
 
-      <div className="mt-2 text-gray-400">{product.name}</div>
-      <div className="text-gray-100">${product.prices?.price.value}</div>
+      <div className="mt-2 text-sm text-gray-400">{product.name}</div>
+      <div className="text-sm text-gray-100">${product.prices?.price.value}</div>
     </div>
   )
 }

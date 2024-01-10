@@ -59,13 +59,13 @@ export const ProductsCarousel = forwardRef(function ProductsCarousel(
     {
       breakpoints: {
         [getTabletBreakpoint()]: {
-          slides: { perView: 2, origin: 'auto' },
+          slides: { perView: 2, origin: 'auto', spacing: 24 },
         },
         [getMobileBreakpoint()]: {
           slides: { perView: 1, origin: 'auto' },
         },
       },
-      slides: { perView: itemsShown, origin: 'auto' },
+      slides: { perView: itemsShown, origin: 'auto', spacing: 32 },
       selector: ':scope > div',
     },
     [
@@ -121,15 +121,7 @@ export const ProductsCarousel = forwardRef(function ProductsCarousel(
                 .map(id => products.find(p => p.id === id))
                 .filter(exists)
                 .map((product, index) => (
-                  <ProductsCarouselItem
-                    className="px-3"
-                    style={{
-                      flexBasis: (1 / itemsShown) * 100 + '%',
-                      minWidth: (1 / itemsShown) * 100 + '%',
-                    }}
-                    key={`${product.id}:${index}`}
-                    product={product}
-                  />
+                  <ProductsCarouselItem key={`${product.id}:${index}`} product={product} />
                 ))}
             </div>
           </div>
