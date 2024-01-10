@@ -101,7 +101,7 @@ export function Navigation({
   return (
     <>
       <header className={clsx(className, '@container relative z-30')} ref={navElement}>
-        <div className="flex items-center justify-between gap-x-4 bg-beige-100 px-4 py-2 sm:px-8">
+        <div className="@2xl:justify-between flex items-center justify-center gap-x-4 bg-beige-100 px-4 py-2 sm:px-8">
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +115,7 @@ export function Navigation({
             <span className="text-xs leading-normal text-gray-300">{announcement}</span>
           </div>
 
-          <div className="flex gap-x-8">
+          <div className="@2xl:flex hidden gap-x-8">
             {topLinks?.map((topLink, index) => (
               <Link
                 href={topLink.link?.href ?? '#'}
@@ -129,38 +129,55 @@ export function Navigation({
           </div>
         </div>
 
-        <div className="flex items-center justify-between gap-x-4 bg-white px-4 py-3 sm:px-8">
-          <button
-            aria-label={mobileNavOpen ? 'Close mobile menu' : 'View mobile menu'}
-            className="@5xl:hidden block p-3"
-            onClick={() => setMobileNavOpen(!mobileNavOpen)}
-          >
-            <svg
-              viewBox="0 0 26 24"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="stroke-primary h-6 w-[26px]"
+        <div className="@2xl:py-3 @2xl:px-8 flex items-center justify-between gap-x-4 bg-white px-4 py-2">
+          <div className="@5xl:hidden block flex-1">
+            <button
+              aria-label={mobileNavOpen ? 'Close mobile menu' : 'View mobile menu'}
+              onClick={() => setMobileNavOpen(!mobileNavOpen)}
             >
               {mobileNavOpen ? (
-                <path id="close" d="M3 2L23 22Z M3 22L23 2"></path>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  className="h-6 w-6 stroke-gray-300"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
               ) : (
-                <path id="menu" d="M1 2H25Z M1 12H25Z M1 22H25"></path>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  className="h-6 w-6 stroke-gray-300"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="4" x2="20" y1="12" y2="12" />
+                  <line x1="4" x2="20" y1="6" y2="6" />
+                  <line x1="4" x2="20" y1="18" y2="18" />
+                </svg>
               )}
-            </svg>
-          </button>
+            </button>
+          </div>
 
           {logoImage && (
-            <Link href={logoLink?.href ?? '#'} target={logoLink?.target}>
-              <Image
-                alt={logoAlt}
-                height={logoWidth / (logoImage.dimensions.width / logoImage.dimensions.height)}
-                priority
-                src={logoImage.url}
-                width={logoWidth}
-              />
-            </Link>
+            <div className="@5xl:flex-1">
+              <Link href={logoLink?.href ?? '#'} target={logoLink?.target}>
+                <Image
+                  alt={logoAlt}
+                  height={logoWidth / (logoImage.dimensions.width / logoImage.dimensions.height)}
+                  priority
+                  src={logoImage.url}
+                  width={logoWidth}
+                />
+              </Link>
+            </div>
           )}
 
           <div className="@2xl:gap-x-4 flex items-center gap-x-2">
@@ -266,10 +283,10 @@ export function Navigation({
             </NavigationMenu.Root>
           </div>
 
-          <div className="flex items-center gap-x-8 stroke-gray-300">
+          <div className="@2xl:gap-x-6 flex flex-1 items-center justify-end gap-x-4 stroke-gray-300">
             <Link href="">
               <svg
-                className="w-6 py-4"
+                className="w-6 py-2"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -282,9 +299,9 @@ export function Navigation({
               </svg>
             </Link>
 
-            <Link href="">
+            <Link href="" className="@lg:block hidden">
               <svg
-                className="w-6 py-4"
+                className="w-6 py-2"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -299,7 +316,7 @@ export function Navigation({
 
             <Link href="">
               <svg
-                className="w-6 py-4"
+                className="w-6 py-2"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -320,12 +337,14 @@ export function Navigation({
         <Portal.Root asChild>
           <>
             <div
-              className={clsx('fixed inset-0 z-40 bg-black/50 transition-opacity duration-300')}
+              className={clsx(
+                'font-header fixed inset-0 z-40 bg-gray-400/50 transition-opacity duration-300'
+              )}
               onClick={() => setMobileNavOpen(false)}
             />
             <Accordion.Root
               type="multiple"
-              className="animate-revealRight fixed inset-y-0 z-50 w-60 -translate-x-full overflow-auto bg-white p-7"
+              className="animate-revealRight fixed inset-y-0 z-50 w-72 -translate-x-full overflow-auto bg-white px-4 py-2"
             >
               {mainNavLinks?.map((mainNavLink, footerMainNavLinkIndex) => (
                 <Accordion.Item
@@ -336,10 +355,10 @@ export function Navigation({
                   {mainNavLink.subnavGroups.length > 0 ? (
                     <>
                       <Accordion.Trigger asChild>
-                        <span className="text-primary data-[state=open]:text-accent group flex w-full items-center justify-between py-1 text-sm font-bold uppercase leading-normal outline-none">
+                        <span className="data-[state=open]:text-accent font-header group flex w-full items-center justify-between py-1.5 text-lg leading-normal text-gray-300 outline-none">
                           {mainNavLink.text}
                           <svg
-                            className="linear duration-250 stroke-primary group-data-[state=open]:stroke-accent ml-2 h-2 w-3 transition-transform group-data-[state=open]:-rotate-180"
+                            className="linear duration-250 group-data-[state=open]:stroke-accent ml-2 h-2 w-3 stroke-gray-300 transition-transform group-data-[state=open]:-rotate-180"
                             fill="none"
                             viewBox="0 0 12 8"
                           >
@@ -355,13 +374,13 @@ export function Navigation({
                       <Accordion.AccordionContent asChild>
                         <>
                           {mainNavLink.subnavGroups.map((subnavGroup, i) => (
-                            <ul className="space-y-2 pb-2 pl-3 pt-2" key={i}>
+                            <ul className="pl-3" key={i}>
                               {subnavGroup.subnavLinks.map((subnavLink, footerSubnavLinkIndex) => (
                                 <li key={footerSubnavLinkIndex}>
                                   <Link
                                     href={subnavLink.link?.href ?? '#'}
                                     target={subnavLink.link?.target}
-                                    className="block text-sm leading-normal text-gray-300"
+                                    className="font-header block py-1.5 text-sm leading-normal text-gray-300"
                                   >
                                     {subnavLink.linkText}
                                   </Link>
@@ -376,7 +395,7 @@ export function Navigation({
                     <Link
                       href={mainNavLink.link?.href ?? '#'}
                       target={mainNavLink.link?.target}
-                      className="block py-1 text-sm leading-normal text-gray-300 outline-none"
+                      className="font-header block py-1.5 text-lg leading-normal text-gray-300 outline-none"
                     >
                       {mainNavLink.text}
                     </Link>
