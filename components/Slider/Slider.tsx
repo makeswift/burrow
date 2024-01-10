@@ -23,7 +23,10 @@ export const Slider = forwardRef(function Slider(
   ref: Ref<HTMLDivElement>
 ) {
   return (
-    <div ref={ref} className={clsx(className, '@container text-center text-gray-300')}>
+    <div
+      ref={ref}
+      className={clsx(className, '@container text-center text-gray-300', sliderLabel && 'pb-5')}
+    >
       <p className="font-header mb-1.5 text-lg">{title}</p>
       <div className="@2xl:gap-4 flex w-full items-center gap-3 text-base">
         <span className="@2xl:w-32 w-24 text-right">{leftText}</span>
