@@ -249,7 +249,7 @@ export function Navigation({
 
                           <div className="flex items-start gap-x-4">
                             {mainNavLink.featureLinks.map((featureLink, index) => (
-                              <NavigationMenu.Link asChild>
+                              <NavigationMenu.Link asChild key={index}>
                                 <Link
                                   href={featureLink.link?.href ?? '#'}
                                   target={featureLink.link?.target}
